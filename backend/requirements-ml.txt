@@ -1,0 +1,3 @@
+# Optional: semantic embeddings via sentence-transformers (pulls in PyTorch, ~1GB+).
+# Without it the backend falls back to the built-in hashing embedding provider.
+sentence-transformers>=3.0.0
