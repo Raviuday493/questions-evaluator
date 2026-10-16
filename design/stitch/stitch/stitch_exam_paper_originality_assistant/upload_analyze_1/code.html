@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ScholarlyPrep - Upload and Analyze Paper</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-surface": "#191c1e",
+                        "background": "#f7f9fb",
+                        "surface-container": "#eceef0",
+                        "on-surface-variant": "#44474e",
+                        "secondary-container": "#d0e1fb",
+                        "on-tertiary": "#ffffff",
+                        "primary": "#000a1e",
+                        "inverse-surface": "#2d3133",
+                        "on-tertiary-fixed": "#002113",
+                        "on-tertiary-fixed-variant": "#005236",
+                        "surface-bright": "#f7f9fb",
+                        "surface": "#f7f9fb",
+                        "inverse-primary": "#aec7f6",
+                        "on-secondary-container": "#54647a",
+                        "error-container": "#ffdad6",
+                        "primary-container": "#002147",
+                        "on-background": "#191c1e",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "primary-fixed": "#d6e3ff",
+                        "surface-variant": "#e0e3e5",
+                        "tertiary-container": "#002718",
+                        "surface-container-low": "#f2f4f6",
+                        "outline-variant": "#c4c6cf",
+                        "on-primary-fixed-variant": "#2d476f",
+                        "tertiary-fixed-dim": "#4edea3",
+                        "primary-fixed-dim": "#aec7f6",
+                        "surface-container-high": "#e6e8ea",
+                        "on-primary": "#ffffff",
+                        "on-primary-container": "#708ab5",
+                        "inverse-on-surface": "#eff1f3",
+                        "error": "#ba1a1a",
+                        "on-tertiary-container": "#009c6b",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-tint": "#465f88",
+                        "surface-dim": "#d8dadc",
+                        "outline": "#74777f",
+                        "secondary": "#505f76",
+                        "surface-container-highest": "#e0e3e5",
+                        "on-secondary": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "tertiary-fixed": "#6ffbbe",
+                        "tertiary": "#000d06",
+                        "secondary-fixed": "#d3e4fe",
+                        "on-secondary-fixed": "#0b1c30",
+                        "on-primary-fixed": "#001b3d",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "on-error": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "sm": "8px",
+                        "xl": "32px",
+                        "2xl": "48px",
+                        "base": "4px",
+                        "xs": "4px",
+                        "lg": "24px",
+                        "margin": "32px",
+                        "gutter": "24px",
+                        "md": "16px"
+                    },
+                    "fontFamily": {
+                        "label-md": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "headline-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "label-sm": ["11px", { "lineHeight": "14px", "fontWeight": "500" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .pulse-emerald {
+            animation: pulse-border 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes pulse-border {
+            0%, 100% { border-color: rgba(16, 185, 129, 1); }
+            50% { border-color: rgba(16, 185, 129, .5); }
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col md:flex-row">
+<!-- NavigationDrawer (Desktop) -->
+<nav class="bg-surface-container-low dark:bg-surface-container-low h-full w-[240px] fixed left-0 top-0 border-r border-outline-variant dark:border-outline-variant hidden md:flex flex-col gap-base p-md z-40">
+<div class="flex items-center gap-md mb-xl">
+<img class="w-12 h-12 rounded-full object-cover" data-alt="A professional headshot of an academic faculty member in a minimalist office setting. The lighting is soft and natural, emphasizing a clean, modern aesthetic suitable for a high-end scholarly application. Neutral background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDnp9DO6l-Rn6uHk6fTOfiBg8a1ljUSaLYVtr0OlTFYxrm78o8j6BaV-PJujFA1ARcGMrDh0mlGea8FS4f2GF7t08CXS61cq-oODyPtHy6-1V3toTMl7jxL0tEtmETyelqYfOQLH1hv_iMQiPRIXEC-eF2F49P_ORaLKk8PxPc-Y8MElVClgquZUBHU44buWzwJvkUw_OS16up5RguEubcpqFkuQOpe0581utfesto9kT88_Spvu12d"/>
+<div class="flex flex-col text-left">
+<span class="font-headline-sm text-headline-sm text-primary dark:text-primary-fixed">Dr. Academic User</span>
+<span class="font-label-md text-label-md text-on-surface-variant">Senior Faculty</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant opacity-75">Department of Science</span>
+</div>
+</div>
+<ul class="flex flex-col gap-sm flex-1">
+<li>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high rounded-full transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined font-variation-settings: 'FILL' 0;">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-md px-md py-sm bg-secondary-container text-on-secondary-container font-bold rounded-full transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">inventory_2</span>
+<span class="font-label-md text-label-md">Archival Status</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high rounded-full transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined font-variation-settings: 'FILL' 0;">history</span>
+<span class="font-label-md text-label-md">Historical Data</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high rounded-full transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined font-variation-settings: 'FILL' 0;">settings</span>
+<span class="font-label-md text-label-md">Settings</span>
+</a>
+</li>
+</ul>
+</nav>
+<!-- Main Content Area -->
+<div class="flex-1 md:ml-[240px] flex flex-col min-h-screen">
+<!-- TopAppBar -->
+<header class="bg-surface-container-lowest dark:bg-surface-container-lowest w-full top-0 sticky border-b border-outline-variant dark:border-outline-variant z-30">
+<div class="flex justify-between items-center w-full px-margin py-md max-w-[1440px] mx-auto">
+<div class="flex items-center gap-md">
+<!-- Mobile Menu Button (Visible only on mobile) -->
+<button class="md:hidden text-on-surface-variant hover:bg-surface-container-low dark:hover:bg-surface-container-low p-sm rounded-full transition-colors duration-200">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed">ScholarlyPrep</h1>
+</div>
+<div class="flex items-center gap-md">
+<button class="text-on-secondary-container dark:text-on-secondary-container hover:bg-surface-container-low dark:hover:bg-surface-container-low p-sm rounded-full transition-colors duration-200">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<!-- Mobile Avatar -->
+<img class="md:hidden w-8 h-8 rounded-full object-cover" data-alt="A professional headshot of an academic faculty member in a minimalist office setting. The lighting is soft and natural, emphasizing a clean, modern aesthetic suitable for a high-end scholarly application. Neutral background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBfqmZWf1cZz6sWmhy-YuILg0MIeApl7hdH1n5jAUw6f65Dz0LDhDXVGQXyTpBR9PE9rxKmIccUj_HDVTzpCR4aK_yVrC1ClubyRBEW-ZE3BMuBrjTBhwH6EvWWjrqQujStz45_RNBRGGVHEfgUHzKjezatCloYHASxAK3S-1ORdMv8lAvWgAlmeIMvshyWGqsk7H6SBJ2Kh1RT-rxydJqm4JZk3tZcGOas7gVb2izvIfLO0n60_QH3"/>
+</div>
+</div>
+</header>
+<!-- Main Canvas -->
+<main class="flex-1 p-margin pb-24 md:pb-margin max-w-[1440px] w-full mx-auto flex flex-col gap-xl">
+<header class="mb-lg">
+<h2 class="font-headline-lg text-headline-lg text-primary">Upload &amp; Analyze Paper</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-sm">Submit a new manuscript for archival analysis and originality verification.</p>
+</header>
+<!-- Multi-step Form Container (Bento Layout) -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Left Column: File & Metadata (Steps 1 & 2) -->
+<div class="lg:col-span-8 flex flex-col gap-xl">
+<!-- Step 1: File Selection -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg relative overflow-hidden group transition-all duration-300">
+<div class="absolute top-0 left-0 w-1 h-full bg-primary-container"></div>
+<h3 class="font-headline-sm text-headline-sm text-primary mb-md flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary-container">counter_1</span>
+                            File Selection
+                        </h3>
+<!-- Drag & Drop Zone -->
+<div class="border-2 border-dashed border-outline-variant hover:border-primary-container rounded-lg p-xl flex flex-col items-center justify-center bg-surface-container-low transition-colors cursor-pointer group-hover:bg-surface-container-lowest min-h-[200px]" id="drop-zone">
+<span class="material-symbols-outlined text-display-lg text-on-surface-variant mb-md group-hover:text-primary-container transition-colors">upload_file</span>
+<p class="font-body-lg text-body-lg text-primary text-center">Drag &amp; Drop manuscript here</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-sm text-center">or browse for PDF or DOCX (Max 50MB)</p>
+<button class="mt-lg bg-primary-container text-on-primary-container font-label-md text-label-md px-lg py-sm rounded-full hover:bg-primary transition-colors hover:text-on-primary">
+                                Browse Files
+                            </button>
+</div>
+</section>
+<!-- Step 2: Paper Metadata -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg relative">
+<div class="absolute top-0 left-0 w-1 h-full bg-surface-variant"></div>
+<h3 class="font-headline-sm text-headline-sm text-primary mb-md flex items-center gap-sm text-on-surface-variant">
+<span class="material-symbols-outlined">counter_2</span>
+                            Paper Metadata
+                        </h3>
+<form class="grid grid-cols-1 md:grid-cols-2 gap-md opacity-75 pointer-events-none" id="metadata-form">
+<div class="flex flex-col gap-xs">
+<label class="font-label-md text-label-md text-primary" for="academic-year">Academic Year</label>
+<select class="border border-outline-variant rounded-DEFAULT p-sm bg-surface-container-lowest font-body-md text-body-md focus:border-primary focus:ring-1 focus:ring-primary outline-none" id="academic-year">
+<option>2023 - 2024</option>
+<option>2022 - 2023</option>
+<option>2021 - 2022</option>
+</select>
+</div>
+<div class="flex flex-col gap-xs">
+<label class="font-label-md text-label-md text-primary" for="department">Department</label>
+<select class="border border-outline-variant rounded-DEFAULT p-sm bg-surface-container-lowest font-body-md text-body-md focus:border-primary focus:ring-1 focus:ring-primary outline-none" id="department">
+<option>Computer Science</option>
+<option>Biology</option>
+<option>History</option>
+</select>
+</div>
+<div class="flex flex-col gap-xs md:col-span-2">
+<label class="font-label-md text-label-md text-primary" for="subject">Subject / Course Code</label>
+<input class="border border-outline-variant rounded-DEFAULT p-sm bg-surface-container-lowest font-body-md text-body-md focus:border-primary focus:ring-1 focus:ring-primary outline-none" id="subject" placeholder="e.g. CS101" type="text"/>
+</div>
+<div class="flex flex-col gap-xs md:col-span-2">
+<label class="font-label-md text-label-md text-primary" for="author">Primary Author (Student ID)</label>
+<input class="border border-outline-variant rounded-DEFAULT p-sm bg-surface-container-lowest font-body-md text-body-md focus:border-primary focus:ring-1 focus:ring-primary outline-none" id="author" placeholder="Enter student ID..." type="text"/>
+</div>
+</form>
+</section>
+</div>
+<!-- Right Column: Processing State (Step 3) -->
+<div class="lg:col-span-4 flex flex-col gap-xl">
+<section class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg relative h-full flex flex-col">
+<div class="absolute top-0 left-0 w-1 h-full bg-surface-variant"></div>
+<h3 class="font-headline-sm text-headline-sm text-primary mb-md flex items-center gap-sm text-on-surface-variant">
+<span class="material-symbols-outlined">counter_3</span>
+                            Analysis Status
+                        </h3>
+<div class="flex-1 flex flex-col items-center justify-center opacity-50 text-center p-lg">
+<span class="material-symbols-outlined text-display-lg text-outline-variant mb-md">analytics</span>
+<p class="font-body-md text-body-md text-on-surface-variant">Awaiting file upload to begin analysis.</p>
+</div>
+<!-- Hidden Processing State (to be shown via JS ideally) -->
+<div class="hidden flex-col gap-lg mt-auto">
+<div class="flex justify-between items-end">
+<span class="font-label-md text-label-md text-primary">Scanning Archive...</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">45%</span>
+</div>
+<div class="w-full h-1 bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-primary-container w-[45%]"></div>
+</div>
+</div>
+</section>
+</div>
+</div>
+<!-- Global Action Bar -->
+<div class="flex justify-end gap-md mt-lg border-t border-outline-variant pt-lg">
+<button class="px-lg py-sm border border-outline-variant text-secondary rounded-full font-label-md text-label-md hover:bg-surface-container-low transition-colors">
+                    Cancel
+                </button>
+<button class="px-lg py-sm bg-surface-container-high text-on-surface-variant rounded-full font-label-md text-label-md cursor-not-allowed opacity-50">
+                    Begin Analysis
+                </button>
+</div>
+</main>
+</div>
+<!-- BottomNavBar (Mobile) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full flex justify-around items-center px-4 py-2 bg-surface-container-lowest border-t border-outline-variant dark:border-outline-variant z-50">
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:bg-surface-container-high transition-transform scale-95 active:scale-90" href="#">
+<span class="material-symbols-outlined font-variation-settings: 'FILL' 0;">grid_view</span>
+<span class="font-label-sm text-label-sm mt-xs">Dashboard</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-lg py-xs transition-transform scale-95 active:scale-90" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">cloud_upload</span>
+<span class="font-label-sm text-label-sm mt-xs">Upload</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:bg-surface-container-high transition-transform scale-95 active:scale-90" href="#">
+<span class="material-symbols-outlined font-variation-settings: 'FILL' 0;">lightbulb</span>
+<span class="font-label-sm text-label-sm mt-xs">Insights</span>
+</a>
+</nav>
+</body></html>

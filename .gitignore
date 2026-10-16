@@ -1,0 +1,63 @@
+# Universal
+.DS_Store
+Thumbs.db
+*.tmp
+*.log
+.env
+.env.local
+.env.*.local
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+.venv-local/
+venv/
+ENV/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+!frontend/lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Node.js
+node_modules/
+.next/
+out/
+.nuxt/
+dist/
+.cache/
+.parcel-cache/
+.vuepress/dist/
+.serverless/
+.fusebox/
+.dynamodb/
+
+# IDE / Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Project upload temp files
+backend/uploads/
+*.tsbuildinfo
+
+# Local development database
+backend/qpi.db
+backend/qpi.db-*
