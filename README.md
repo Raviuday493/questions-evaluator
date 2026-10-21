@@ -39,13 +39,16 @@ question-paper-intelligence/
 ├── design/            # Design assets & wireframes
 └── docker-compose.yml # Infrastructure services
 ```
-
 ## Prerequisites
 
-- **Python** 3.11–3.13 (3.13 recommended; PyTorch wheels for newer versions may lag)
-- **Node.js** 18+ and **npm**
-- **Docker** and **Docker Compose**
-- (Optional) **Tesseract OCR** + **Poppler** — only needed to analyse scanned (image-only) PDFs
+Before running the project, ensure you have the following installed:
+
+- Python 3
+- Node.js and npm
+- Git
+
+Refer to the project setup instructions for the required
+versions and additional dependencies.
 
 ## Getting Started
 
