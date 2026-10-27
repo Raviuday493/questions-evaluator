@@ -312,6 +312,58 @@ class StoredFile(Base):
     created_at = Column(DateTime(timezone=True), default=utcnow, nullable=False)
 
 
+class ArchiveQuestion(Base):
+    """Curated historical question with source provenance, independent of uploaded paper files."""
+
+    __tablename__ = "archive_questions"
+    __table_args__ = (
+        UniqueConstraint("content_hash", "source_key", name="uq_archive_question_source_hash"),
+        Index("ix_archive_questions_topic_created", "topic", "ingested_at"),
+        Index("ix_archive_questions_subject_created", "subject", "ingested_at"),
+    )
+
+    id = Column(Uuid, primary_key=True, default=uuid.uuid4)
+    question_text = Column(Text, nullable=False)
+    normalized_text = Column(Text, nullable=False)
+    content_hash = Column(String(64), nullable=False, index=True)
+    subject = Column(String(255), nullable=True)
+    topic = Column(String(255), nullable=True)
+    source = Column(String(255), nullable=False)
+    source_reference = Column(String(512), nullable=True)
+    source_key = Column(String(64), nullable=False)
+    ingested_by_id = Column(Uuid, ForeignKey("admin_users.id", ondelete="SET NULL"), nullable=True)
+    ingested_at = Column(DateTime(timezone=True), default=utcnow, nullable=False)
+    metadata_json = Column("metadata", PortableJSON, nullable=False, default=dict)
+
+    solutions = relationship(
+        "ArchiveSolution",
+        back_populates="question",
+        cascade="all, delete-orphan",
+        order_by="ArchiveSolution.created_at",
+    )
+    ingested_by = relationship("AdminUser")
+
+
+class ArchiveSolution(Base):
+    __tablename__ = "archive_solutions"
+    __table_args__ = (
+        UniqueConstraint(
+            "question_id", "content_hash", name="uq_archive_solution_question_hash"
+        ),
+        Index("ix_archive_solutions_question", "question_id"),
+    )
+
+    id = Column(Uuid, primary_key=True, default=uuid.uuid4)
+    question_id = Column(
+        Uuid, ForeignKey("archive_questions.id", ondelete="CASCADE"), nullable=False
+    )
+    solution_text = Column(Text, nullable=False)
+    content_hash = Column(String(64), nullable=False)
+    created_at = Column(DateTime(timezone=True), default=utcnow, nullable=False)
+
+    question = relationship("ArchiveQuestion", back_populates="solutions")
+
+
 # --------------------------------------------------------------------------- admin panel
 class AdminRole(Base):
     """A named permission set for admin-panel accounts. System roles are defined in code and read-only."""
