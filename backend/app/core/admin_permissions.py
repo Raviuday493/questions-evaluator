@@ -20,6 +20,7 @@ PERMISSIONS: Dict[str, tuple] = {
     "papers.download": ("Papers", "Download original uploaded files"),
     "papers.manage": ("Papers", "Re-analyse, approve and fail stuck analyses"),
     "papers.delete": ("Papers", "Delete papers (including archived ones)"),
+    "archive.import": ("Historical Archive", "Import authorized historical questions and solutions"),
     "catalog.view": ("Catalog", "View departments, courses and syllabi"),
     "catalog.edit": ("Catalog", "Create and edit departments, courses and syllabi"),
     "catalog.delete": ("Catalog", "Delete unused departments and courses"),
@@ -47,7 +48,7 @@ SYSTEM_ROLES: Dict[str, tuple] = {
     "academic_manager": (
         "Academic Manager",
         "Curates the paper archive, courses and syllabi.",
-        ["dashboard.view", "users.view", "papers.view", "papers.download", "papers.manage", "papers.delete",
+        ["dashboard.view", "users.view", "papers.view", "papers.download", "papers.manage", "papers.delete", "archive.import",
          "catalog.view", "catalog.edit", "catalog.delete", "reports.view", "reports.export"],
     ),
     "support": (

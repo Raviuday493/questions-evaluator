@@ -143,6 +143,52 @@ cd frontend && npm run lint && npx tsc --noEmit && npm run build
 The archive consists of papers uploaded with *Add to historical exam archive* (archival/system admins) plus
 drafts that were **approved** from their report page.
 
+### Central historical question archive
+
+The structured archive stores historical question text and one or more solutions separately from uploaded
+paper files. It retains subject, topic, source, source reference, import time, importing admin, SHA-256 text
+hashes, and caller-supplied non-sensitive metadata. Text is normalized to NFC, line endings are standardized,
+and trailing line whitespace is removed while indentation, internal spacing, line breaks, math notation,
+and code are retained.
+This feature detects exact duplicates only; it does not perform logical similarity detection.
+
+Apply the schema with `cd backend && alembic upgrade head`. Imports are JSON arrays of at most 500 records and
+5 MiB per request. Each record requires `question`, a non-empty `solutions` string array, and `source`; optional
+fields are `subject`, `topic`, `source_reference`, and object-valued `metadata`:
+
+```json
+[
+  {
+    "question": "Solve x^2 - 5x + 6 = 0.",
+    "solutions": ["(x - 2)(x - 3) = 0, so x = 2 or x = 3."],
+    "subject": "Mathematics",
+    "topic": "Quadratics",
+    "source": "Authorized sample collection",
+    "source_reference": "sample-001",
+    "metadata": {"year": 2024}
+  }
+]
+```
+
+Use an admin-panel session with `archive.import` to import (cookie-authenticated writes require the existing
+`X-Admin-Request: 1` CSRF header). The built-in Administrator, Academic Manager, and Super Admin roles have
+this permission; it is separate from general paper management. `papers.view` is required for reads. Import
+results mark each input record `created`, `updated` (a new solution was added), `skipped` (already present),
+or `failed`. Valid rows are committed in one transaction;
+malformed rows are reported and excluded. Repeating the same question/source and solution is idempotent.
+
+```bash
+curl -b admin.cookies -H 'X-Admin-Request: 1' -H 'Content-Type: application/json' \
+  -d @questions.json http://localhost:8000/api/v1/admin/archive/imports
+curl -b admin.cookies 'http://localhost:8000/api/v1/admin/archive?page=1&limit=20&topic=Quadratics'
+curl -b admin.cookies http://localhost:8000/api/v1/admin/archive/<record-id>
+```
+
+The list endpoint supports `page`, `limit`, text `search`, and exact `subject`, `topic`, and `source` filters.
+Only import and read/detail operations are currently provided; deletion and provenance corrections are future
+management work. Importers must have authorization to use their source data. Metadata is retained as supplied,
+so callers should not put credentials or sensitive personal data in it.
+
 ## API overview (`/api/v1`)
 
 | Method | Path | Purpose |
